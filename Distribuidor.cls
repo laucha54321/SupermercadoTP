@@ -2,7 +2,7 @@
 
 Persona subclass: #Distribuidor
 	instanceVariableNames: 'id valorEntrega'
-	classVariableNames: ''
+	classVariableNames: 'Contador'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Distribuidor guid: (GUID fromString: '{402f4abf-ecde-45de-adc7-de599e9bde3d}')!
@@ -15,11 +15,11 @@ super cargaDatos.
 id:=Prompter prompt: 'Ingrese id: '.
 valorEntrega:=Prompter prompt: 'Ingrese Clave: '.!
 
-codigo
-	^codigo!
+id
+	^id!
 
-codigo: anObject
-	codigo := anObject!
+id: anObject
+	id := anObject!
 
 valorEntrega
 	^valorEntrega!
@@ -28,9 +28,23 @@ valorEntrega: anObject
 	valorEntrega := anObject! !
 !Distribuidor categoriesForMethods!
 cargaDatos!public! !
-codigo!accessing!private! !
-codigo:!accessing!private! !
+id!accessing!private! !
+id:!accessing!private! !
 valorEntrega!accessing!private! !
 valorEntrega:!accessing!private! !
+!
+
+!Distribuidor class methodsFor!
+
+generarId
+(Contador) ifNil: [ 
+	Contador:=0.
+].
+(Contador) ifNotNil: [
+	Contador:=Contador+1.
+].
+^Contador! !
+!Distribuidor class categoriesForMethods!
+generarId!public! !
 !
 

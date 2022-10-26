@@ -2,7 +2,7 @@
 
 Object subclass: #Articulo
 	instanceVariableNames: 'descripcion precio id'
-	classVariableNames: ''
+	classVariableNames: 'Contador'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Articulo guid: (GUID fromString: '{c930734f-4d43-408c-a2d8-336b1692c2d5}')!
@@ -42,5 +42,19 @@ id!accessing!private! !
 id:!accessing!private! !
 precio!accessing!private! !
 precio:!accessing!private! !
+!
+
+!Articulo class methodsFor!
+
+generarId
+(Contador) ifNil: [ 
+	Contador:=0.
+].
+(Contador) ifNotNil: [
+	Contador:=Contador+1.
+].
+^Contador! !
+!Articulo class categoriesForMethods!
+generarId!public! !
 !
 

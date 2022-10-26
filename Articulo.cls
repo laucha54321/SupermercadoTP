@@ -47,10 +47,11 @@ precio:!accessing!private! !
 !Articulo class methodsFor!
 
 generarId
-(Contador) ifNil: [ 
+(Contador isNil) 
+ifTrue: [ 
 	Contador:=0.
-].
-(Contador) ifNotNil: [
+]
+ifFalse: [
 	Contador:=Contador+1.
 ].
 ^Contador! !

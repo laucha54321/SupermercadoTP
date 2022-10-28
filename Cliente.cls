@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Persona subclass: #Cliente
-	instanceVariableNames: 'clave domicilio'
+	instanceVariableNames: 'id domicilio'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -12,25 +12,25 @@ Cliente comment: ''!
 
 cargaDatos
 super cargaDatos.
-clave:=Prompter prompt: 'Ingrese Clave: '.
+id:=(Prompter prompt: 'Ingrese Clave: ')asNumber asInteger.
 domicilio:=Prompter prompt: 'Ingrese Domicilio: '.!
-
-clave
-	^clave!
-
-clave: anObject
-	clave := anObject!
 
 domicilio
 	^domicilio!
 
 domicilio: anObject
-	domicilio := anObject! !
+	domicilio := anObject!
+
+id
+	^id!
+
+id: anObject
+	id := anObject! !
 !Cliente categoriesForMethods!
 cargaDatos!public! !
-clave!accessing!private! !
-clave:!accessing!private! !
 domicilio!accessing!private! !
 domicilio:!accessing!private! !
+id!accessing!private! !
+id:!accessing!private! !
 !
 

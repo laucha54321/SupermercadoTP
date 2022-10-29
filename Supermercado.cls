@@ -24,6 +24,25 @@ cargaArticulos
 			colArticulos add: art.
 			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber]!
 
+cargaCliente
+|cli clave aux|
+"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
+(colClientes)ifNil:[
+	colClientes:=OrderedCollection new.
+].
+clave:=(Prompter prompt: 'Ingrese su clave de usuario') asNumber asInteger.
+aux := colClientes detect:[:i | i id = clave ] ifNone:[
+	MessageBox notify:'Cliente no Encontrado. Se lo va a ingresar.'.
+	aux:=nil.
+].
+aux isNil ifTrue:[
+	cli:=Cliente new.
+	cli cargaDatos.
+	colClientes add: cli.
+]ifFalse:[
+	MessageBox notify:'Cliente Encontrado.'
+]!
+
 cargaDistribuidor
 |aux|
 "Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
@@ -39,6 +58,34 @@ MessageBox notify: 'Distribuidor Agregado.'
 
 !
 
+cargarDatosPrueba
+|aux|
+"Articulos___________________________________________________"
+(colArticulos)ifNil:[
+	colArticulos:=OrderedCollection new.
+].
+
+
+
+"Clientes ___________________________________________________________"
+(colClientes )ifNil:[
+	colClientes =OrderedCollection new.
+].
+
+
+"Distribuidores _____________________________________________________"
+(colDistribuidores)ifNil:[
+	colDistribuidores =OrderedCollection new.
+].
+
+
+"Ventas_____________________________________________________________"
+(colVentas)ifNil:[
+	colVentas:=OrderedCollection new.
+].
+
+!
+
 inicia
 colVentas:= OrderedCollection new.!
 
@@ -50,7 +97,7 @@ menu
 						prompt: '1. Carga Articulo 2. Registrar Cliente 3.Registrar Venta 4.Listado Ventas 0.Salir')
 							asNumber asInteger.
 			op = 1 ifTrue: [self cargaArticulos].
-			op = 2 ifTrue: [self registrarCliente].]
+			op = 2 ifTrue: [self cargaCliente].]
 			"(op := 3) ifTrue: [self registrarVenta].
 			op = 4 ifTrue: [self listadoVentas]]"!
 
@@ -77,33 +124,15 @@ Transcript show: 'CLIENTES __________________________________'; cr.
 Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
 colClientes do: [
 	:i | Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i domicilio).
-].!
-
-registrarCliente
-|cli clave aux|
-"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
-(colClientes)ifNil:[
-	colClientes:=OrderedCollection new.
-].
-clave:=(Prompter prompt: 'Ingrese su clave de usuario') asNumber asInteger.
-aux := colClientes detect:[:i | i id = clave ] ifNone:[
-	MessageBox notify:'Cliente no Encontrado. Se lo va a ingresar.'.
-	aux:=nil.
-].
-aux isNil ifTrue:[
-	cli:=Cliente new.
-	cli cargaDatos.
-	colClientes add: cli.
-]ifFalse:[
-	MessageBox notify:'Cliente Encontrado.'
-]! !
+].! !
 !Supermercado categoriesForMethods!
 cargaArticulos!public! !
+cargaCliente!public! !
 cargaDistribuidor!public! !
+cargarDatosPrueba!public! !
 inicia!public! !
 menu!public! !
 mostrarColArticulos!public! !
 mostrarColPersonas!public! !
-registrarCliente!public! !
 !
 

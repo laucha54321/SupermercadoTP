@@ -12,8 +12,9 @@ Distribuidor comment: ''!
 
 cargaDatos
 super cargaDatos.
-id:=Prompter prompt: 'Ingrese id: '.
-valorEntrega:=Prompter prompt: 'Ingrese Clave: '.!
+
+id:= Distribuidor  generarId.	"Genero un id unico de Distribuidor y se lo asigno a la instancia."
+valorEntrega:=Prompter prompt: 'Ingrese Valor de Entrega: '.!
 
 id
 	^id!

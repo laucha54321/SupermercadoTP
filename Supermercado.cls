@@ -12,20 +12,34 @@ Supermercado comment: ''!
 
 cargaArticulos
 	| art op |
+	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
+	(colArticulos)ifNil:[
+		colArticulos:=OrderedCollection new.
+	].
 	op := 1.
 	[op = 0] whileFalse: 
 			[art := MessageBox confirm: 'Es un articulo frio?'.
 			art ifFalse: [art := Articulo new] ifTrue: [art := ArtFrio new].
 			art cargaDatos.
-			(colArticulos)ifNil:[
-				colArticulos:=OrderedCollection new.
-			].
 			colArticulos add: art.
 			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber]!
 
+cargaDistribuidor
+|aux|
+"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
+(colDistribuidores )ifNil:[
+	colDistribuidores :=OrderedCollection new.
+].
+
+aux :=Distribuidor new.
+aux cargaDatos.
+colDistribuidores add: aux.
+
+MessageBox notify: 'Distribuidor Agregado.'
+
+!
+
 inicia
-colClientes:= OrderedCollection new.
-colDistribuidores:= OrderedCollection new.
 colVentas:= OrderedCollection new.!
 
 menu
@@ -52,6 +66,10 @@ colArticulos do: [
 
 registrarCliente
 |cli clave aux|
+"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
+(colClientes)ifNil:[
+	colClientes:=OrderedCollection new.
+].
 clave:=(Prompter prompt: 'Ingrese su clave de usuario') asNumber asInteger.
 aux := colClientes detect:[:i | i id = clave ] ifNone:[
 	MessageBox notify:'Cliente no Encontrado. Se lo va a ingresar.'.
@@ -66,6 +84,7 @@ aux isNil ifTrue:[
 ]! !
 !Supermercado categoriesForMethods!
 cargaArticulos!public! !
+cargaDistribuidor!public! !
 inicia!public! !
 menu!public! !
 mostrarColArticulos!public! !

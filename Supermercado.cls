@@ -17,11 +17,13 @@ cargaArticulos
 			[art := MessageBox confirm: 'Es un articulo frio?'.
 			art ifFalse: [art := Articulo new] ifTrue: [art := ArtFrio new].
 			art cargaDatos.
+			(colArticulos)ifNil:[
+				colArticulos:=OrderedCollection new.
+			].
 			colArticulos add: art.
 			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber]!
 
 inicia
-colArticulos:= OrderedCollection new.
 colClientes:= OrderedCollection new.
 colDistribuidores:= OrderedCollection new.
 colVentas:= OrderedCollection new.!
@@ -37,6 +39,16 @@ menu
 			op = 2 ifTrue: [self registrarCliente].]
 			"(op := 3) ifTrue: [self registrarVenta].
 			op = 4 ifTrue: [self listadoVentas]]"!
+
+mostrarColArticulos
+
+Transcript clear.
+Transcript show: 'id: ', '	Descripcion: ', '	Precio: ', '		Peso:'; cr .
+colArticulos do: [
+	:i | Transcript show:(i id printString),'	', (i descripcion),'		', (i precio printString),'		'.
+	 (i isMemberOf: ArtFrio)ifTrue: [ Transcript show: (i peso printString). ] .
+	Transcript cr.
+].!
 
 registrarCliente
 |cli clave aux|
@@ -56,6 +68,7 @@ aux isNil ifTrue:[
 cargaArticulos!public! !
 inicia!public! !
 menu!public! !
+mostrarColArticulos!public! !
 registrarCliente!public! !
 !
 

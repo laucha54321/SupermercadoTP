@@ -12,10 +12,9 @@ Articulo comment: ''!
 
 cargaDatos
 
+id:=(Prompter prompt: 'Ingrese Id del articulo') asNumber .
 descripcion:=(Prompter prompt: 'Ingrese Descripcion:').
 precio:=(Prompter prompt:'Ingrese Precio')asNumber asFloat.
-id:=Articulo generarId.
-MessageBox notify: ('El id del articulo es: ', id printString).
 !
 
 descripcion

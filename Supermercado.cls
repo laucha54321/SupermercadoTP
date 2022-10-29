@@ -64,6 +64,21 @@ colArticulos do: [
 	Transcript cr.
 ].!
 
+mostrarColPersonas
+
+Transcript clear.
+Transcript show: 'DISTRIBUIDORES ______________________________'; cr.
+Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Valor Entrega:'; cr .
+colDistribuidores do: [
+	:i |Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i valorEntrega).
+].
+Transcript show: '	';cr .
+Transcript show: 'CLIENTES __________________________________'; cr.
+Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
+colClientes do: [
+	:i | Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i domicilio).
+].!
+
 registrarCliente
 |cli clave aux|
 "Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
@@ -88,6 +103,7 @@ cargaDistribuidor!public! !
 inicia!public! !
 menu!public! !
 mostrarColArticulos!public! !
+mostrarColPersonas!public! !
 registrarCliente!public! !
 !
 

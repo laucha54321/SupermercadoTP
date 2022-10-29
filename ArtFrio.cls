@@ -21,6 +21,7 @@ peso: anObject
 	peso := anObject!
 
 precio
+Porcentaje:=0.4.
 ^(precio + (peso * Porcentaje)).! !
 !ArtFrio categoriesForMethods!
 cargaDatos!public! !

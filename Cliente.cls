@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
-Persona subclass: #Cliente
+AAPersona subclass: #Cliente
 	instanceVariableNames: 'id domicilio'
-	classVariableNames: 'Contador'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Cliente guid: (GUID fromString: '{eb69b218-a06d-4675-8893-5120f943f110}')!
+Cliente guid: (GUID fromString: '{EB69B218-A06D-4675-8893-5120F943F110}')!
 Cliente comment: ''!
 !Cliente categoriesForClass!Kernel-Objects! !
 !Cliente methodsFor!
@@ -15,11 +15,10 @@ super cargaDatos.
 id:=(Prompter prompt: 'Ingrese Clave: ')asNumber asInteger.
 domicilio:=Prompter prompt: 'Ingrese Domicilio: '.!
 
-clave
-	^clave!
-
-clave: anObject
-	clave := anObject!
+cargaDatos: cod
+	id := cod.
+	super cargaDatos.
+	domicilio := Prompter prompt: 'Ingrese Domicilio: '!
 
 domicilio
 	^domicilio!
@@ -32,27 +31,10 @@ id
 
 id: anObject
 	id := anObject! !
-!Cliente categoriesForMethods!
-cargaDatos!public! !
-clave!accessing!private! !
-clave:!accessing!private! !
-domicilio!accessing!private! !
-domicilio:!accessing!private! !
-id!accessing!private! !
-id:!accessing!private! !
-!
-
-!Cliente class methodsFor!
-
-generarId
-(Contador) ifNil: [ 
-	Contador:=0.
-].
-(Contador) ifNotNil: [
-	Contador:=Contador+1.
-].
-^Contador! !
-!Cliente class categoriesForMethods!
-generarId!public! !
-!
+!Cliente categoriesFor: #cargaDatos!public! !
+!Cliente categoriesFor: #cargaDatos:!public! !
+!Cliente categoriesFor: #domicilio!public! !
+!Cliente categoriesFor: #domicilio:!public! !
+!Cliente categoriesFor: #id!public! !
+!Cliente categoriesFor: #id:!public! !
 

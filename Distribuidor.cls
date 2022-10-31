@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
-Persona subclass: #Distribuidor
+AAPersona subclass: #Distribuidor
 	instanceVariableNames: 'id valorEntrega'
 	classVariableNames: 'Contador'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Distribuidor guid: (GUID fromString: '{402f4abf-ecde-45de-adc7-de599e9bde3d}')!
+Distribuidor guid: (GUID fromString: '{402F4ABF-ECDE-45DE-ADC7-DE599E9BDE3D}')!
 Distribuidor comment: ''!
 !Distribuidor categoriesForClass!Kernel-Objects! !
 !Distribuidor methodsFor!
@@ -15,6 +15,11 @@ super cargaDatos.
 
 id:= Distribuidor  generarId.	"Genero un id unico de Distribuidor y se lo asigno a la instancia."
 valorEntrega:=Prompter prompt: 'Ingrese Valor de Entrega: '.!
+
+cargaDatos: cod
+	id := cod.
+	super cargaDatos.
+	valorEntrega := (Prompter prompt: 'Ingrese valor de la entrega: ') asFloat asInteger!
 
 id
 	^id!
@@ -27,25 +32,10 @@ valorEntrega
 
 valorEntrega: anObject
 	valorEntrega := anObject! !
-!Distribuidor categoriesForMethods!
-cargaDatos!public! !
-id!accessing!private! !
-id:!accessing!private! !
-valorEntrega!accessing!private! !
-valorEntrega:!accessing!private! !
-!
-
-!Distribuidor class methodsFor!
-
-generarId
-(Contador) ifNil: [ 
-	Contador:=0.
-].
-(Contador) ifNotNil: [
-	Contador:=Contador+1.
-].
-^Contador! !
-!Distribuidor class categoriesForMethods!
-generarId!public! !
-!
+!Distribuidor categoriesFor: #cargaDatos!public! !
+!Distribuidor categoriesFor: #cargaDatos:!public! !
+!Distribuidor categoriesFor: #id!public! !
+!Distribuidor categoriesFor: #id:!public! !
+!Distribuidor categoriesFor: #valorEntrega!public! !
+!Distribuidor categoriesFor: #valorEntrega:!public! !
 

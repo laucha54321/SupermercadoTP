@@ -10,6 +10,10 @@ ArtFrio comment: ''!
 !ArtFrio categoriesForClass!Kernel-Objects! !
 !ArtFrio methodsFor!
 
+cargaArticulo
+super cargaArticulo.
+peso:=(Prompter prompt: 'Ingrese el Peso: ') asNumber asFloat.!
+
 cargaDatos
 super cargaDatos.
 peso:=(Prompter prompt: 'Ingrese el Peso: ') asNumber asFloat.!
@@ -24,6 +28,7 @@ precio
 Porcentaje:=0.4.
 ^(precio + (peso * Porcentaje)).! !
 !ArtFrio categoriesForMethods!
+cargaArticulo!public! !
 cargaDatos!public! !
 peso!accessing!private! !
 peso:!accessing!private! !

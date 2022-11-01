@@ -284,7 +284,7 @@ registrarVenta
 	"Tendriamos que ver si queremos hacer un while NIl para chequear clientes tambien ?"
 	cli := self buscaCli: (Prompter prompt: 'Ingrese clave del Cliente').
 	(cli isNil)ifTrue:[
-		MessageBox notify: 'Cliente no Encontrado. Se lo va a ingresar.'.
+		MessageBox notify: 'Cliente no Encontrado. Si desea registrarse, vuelva al menu principal.'.
 	]
 	ifFalse:[
 	venta cliente: cli. "Como encontro el cliente entonces se lo asigno a el auxiliar venta." 

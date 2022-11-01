@@ -7,9 +7,9 @@
 
 - ~~En vez de usar isMemberOf usar un metodo polimorfico que escriba en el transcript~~
 - ~~Iniciar las variables de la manera mas aburrida :( .~~
-- Crear las claves de ususario unicas.
-  - Hay que registrar el cliente si no lo encontramos o capaz una opcion registrar en el menu?
+- ~~Crear las claves de ususario unicas.~~
 - Validar las cosas ingresadas por prompter.
+  - ~~Los ids de distribuidores son string.~~
 - ~~Agregar las 2 flechas en el diagrama y agregar lo que falta.~~
 - ~~Configurar la fecha de ventas automaticamente.~~
 - Terminar registrarVentas

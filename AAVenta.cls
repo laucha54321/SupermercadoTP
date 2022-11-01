@@ -50,14 +50,10 @@ inicio
 
 	colArticulos := OrderedCollection new!
 
-listar
-""
-colArticulos do:  [:i | MessageBox notify:  'id', i id ].  !
-
 showTranscript
 	Transcript show:'	';cr;cr;show: '_________________________________________________________________';cr; show: '_________________________________________________________________';cr.
-	Transcript show: 'Cliente: ', '		Distribuidor: ', '		Fecha'; cr . 
-	Transcript show:((cliente)nombre),'	',(distribuidor)nombre,'		',(fecha shortString);cr.
+	Transcript show: 'Cliente: ', '		Domicilio: ', '		Fecha'; cr . 
+	Transcript show:((cliente)nombre),'	',(cliente)domicilio,'		',(fecha shortString);cr.
 	Transcript show: '_________________________________________________________________';cr.
 	Transcript show: 'Articulos: ';cr.
 	(colArticulos) do: [ :e |Transcript  show: (e id printString),'.  ',(e descripcion),'		', (e precio printString);cr. ].
@@ -75,7 +71,6 @@ distribuidor:!accessing!public! !
 fecha!public! !
 fecha:!accessing!public! !
 inicio!public! !
-listar!public! !
 showTranscript!public! !
 !
 

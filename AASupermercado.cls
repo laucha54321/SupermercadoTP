@@ -170,7 +170,7 @@ colClientes add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Pedro Perez'.
 aux zona:'Uriquiza'.
-aux id: 1.
+aux id: '1'.
 aux valorEntrega: 12.
 colDistribuidores add: aux.
 
@@ -178,7 +178,7 @@ colDistribuidores add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Marta Tarta'.
 aux zona:'Centro 1'.
-aux id: 2.
+aux id: '2'.
 aux valorEntrega: 15.
 colDistribuidores add: aux.
 "
@@ -204,17 +204,6 @@ self cargarDatosPrueba.
 "Hay que sacar esto del inicia despues lo pongo aca para ahorrame escribirlo en el workspace."
 self mostrarColArticulos.
 self mostrarColPersonas.!
-
-listadoVentas
-	| fecha distruiduidor ventas |
-	distruiduidor := Prompter prompt: 'Ingrese nombre del distribuidor'.
-	fecha := (Prompter prompt: 'Ingrese fecha') asDate.
-	ventas := colVentas select: [:i | i oFecha = fecha and: [i oDistribuidor = distruiduidor]].
-	ventas do: 
-			[:i |
-			Transcript show: i oFecha , '	' , i oDistribuidor , '		' , i nombre , '		' , i domicilio.
-			(i isMemberOf: ArtFrio) ifTrue: [Transcript show: i peso printString].
-			Transcript cr]!
 
 menu
 	| op |
@@ -266,35 +255,49 @@ mostrarVentaDistri
 "Recibe el id de un distribuidor y filtra colVentas para obtener una coleccion
 con solo valores que le corresponden a ese distribuidor y llama al showTranscript
 para mostrar en ventas."
-|aux aux2|
-aux2 :=self buscaDistri:(Prompter prompt:'Ingrese id Distribuidor')asNumber.
-aux:= colVentas select: [:i | (i distribuidor) id ==  aux2 id].
-aux do:[
-	:i | i showTranscript.
-] !
+|aux aux2 aux3|
+aux2:=nil.
+(aux2=nil) ifTrue:[
+	aux2 :=self buscaDistri:(Prompter prompt:'Ingrese id Distribuidor').
+].
+(aux2=nil)ifFalse:[
+	aux3:=Date fromString: (Prompter prompt: 'ingrese fecha de 
+	venta - DD/MM/AAAA').
+	aux:= colVentas select: [:i | (((i fecha)shortString)=(aux3 shortString))&((i distribuidor)id = aux2 id)].
+	aux do:[
+		:i | i showTranscript.
+	].
+]
+
+!
 
 registrarVenta
-	|cli dist venta art|
+	|cli dist venta art idCliente|
 	
 	"Inicio Venta"
 	venta := AAVenta new.
 	venta inicio.
 	venta fecha: Date today.
-
-	"Tendriamos que ver si queremos hacer un while NIl para chequear clientes tambien ?"
-	cli := self buscaCli: (Prompter prompt: 'Ingrese clave del Cliente').
+	"Busca el cliente"
+	idCliente:= (Prompter prompt: 'Ingrese clave del Cliente').
+	cli := self buscaCli:(idCliente).
 	(cli isNil)ifTrue:[
-		MessageBox notify: 'Cliente no Encontrado. Si desea registrarse, vuelva al menu principal.'.
+		|aux|	
+		MessageBox notify: 'Cliente no Encontrado. Procesada con la creacion de usuario.'.
+		aux := Cliente new.
+		aux cargaDatos:idCliente.
+		colClientes add: aux.
 	]
 	ifFalse:[
+	MessageBox notify: 'Cliente Encontrado. Comenzando venta.'.
 	venta cliente: cli. "Como encontro el cliente entonces se lo asigno a el auxiliar venta." 
 
 	"Necesito un distribuidor, no puede haber ventas sin distribuidor, uso un whileTrue para poner distribuidor."
 	[dist isNil] whileTrue:[
-		dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
+		dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor').
 	].
 	venta distribuidor: dist.
-
+	
 	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
 	"buscaArticulo es el unico metodo sin parametros de los busca xq hicimos el prompter adentro."
 		art := self buscaArticulo.
@@ -313,7 +316,6 @@ cargaCliente!public! !
 cargaDistribuidor!public! !
 cargarDatosPrueba!public! !
 inicia!public! !
-listadoVentas!public! !
 menu!public! !
 mostrarColArticulos!public! !
 mostrarColPersonas!public! !

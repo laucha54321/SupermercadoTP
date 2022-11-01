@@ -10,11 +10,6 @@ Cliente comment: ''!
 !Cliente categoriesForClass!Kernel-Objects! !
 !Cliente methodsFor!
 
-cargaDatos
-super cargaDatos.
-id:=(Prompter prompt: 'Ingrese Clave: ')asNumber asInteger.
-domicilio:=Prompter prompt: 'Ingrese Domicilio: '.!
-
 cargaDatos: cod
 	id := cod.
 	super cargaDatos.
@@ -32,7 +27,6 @@ id
 id: anObject
 	id := anObject! !
 !Cliente categoriesForMethods!
-cargaDatos!public! !
 cargaDatos:!public! !
 domicilio!public! !
 domicilio:!public! !

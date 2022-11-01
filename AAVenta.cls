@@ -21,13 +21,11 @@ colArticulos do:[
 ].
 ^acum!
 
-cargaDatos: clie and: dist and: fecha1
-	cliente := clie.
-	distribuidor := dist.
-	fecha:=fecha1.!
-
 cliente
 	^cliente!
+
+cliente: anObject
+	cliente := anObject!
 
 colArticulos
 	^colArticulos!
@@ -38,8 +36,14 @@ colArticulos: anObject
 distribuidor
 	^distribuidor!
 
+distribuidor: anObject
+	distribuidor := anObject!
+
 fecha
 	^fecha!
+
+fecha: anObject
+	fecha := anObject!
 
 inicio
 	""
@@ -48,17 +52,30 @@ inicio
 
 listar
 ""
-colArticulos do:  [:i | MessageBox notify:  'id', i id ].  ! !
+colArticulos do:  [:i | MessageBox notify:  'id', i id ].  !
+
+showTranscript
+	Transcript show:'	';cr;cr;show: '_________________________________________________________________';cr; show: '_________________________________________________________________';cr.
+	Transcript show: 'Cliente: ', '		Distribuidor: ', '		Fecha'; cr . 
+	Transcript show:((cliente)nombre),'	',(distribuidor)nombre,'		',(fecha shortString);cr.
+	Transcript show: '_________________________________________________________________';cr.
+	Transcript show: 'Articulos: ';cr.
+	(colArticulos) do: [ :e |Transcript  show: (e id printString),'.  ',(e descripcion),'		', (e precio printString);cr. ].
+	Transcript show:''; cr; show:'TOTAL:		',(self calculaPrecio)printString. 
+	Transcript show:'	';cr;cr;show: '_________________________________________________________________';cr; show: '_________________________________________________________________';cr.! !
 !AAVenta categoriesForMethods!
 asignaArt:!public! !
 calculaPrecio!public! !
-cargaDatos:and:and:!public! !
 cliente!public! !
+cliente:!accessing!public! !
 colArticulos!accessing!public! !
 colArticulos:!accessing!public! !
 distribuidor!public! !
+distribuidor:!accessing!public! !
 fecha!public! !
+fecha:!accessing!public! !
 inicio!public! !
 listar!public! !
+showTranscript!public! !
 !
 

@@ -24,8 +24,11 @@ peso
 peso: anObject
 	peso := anObject!
 
+porcentajeAsignar
+Porcentaje:=0.4.!
+
 precio
-Porcentaje:=0.4.
+
 ^(precio + (peso * Porcentaje)).!
 
 showTranscript
@@ -36,6 +39,7 @@ cargaArticulo!public! !
 cargaDatos!public! !
 peso!public! !
 peso:!public! !
+porcentajeAsignar!public! !
 precio!public! !
 showTranscript!public! !
 !

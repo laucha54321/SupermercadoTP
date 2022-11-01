@@ -12,9 +12,14 @@ AASupermercado comment: ''!
 
 buscaArticulo
 	| art cod |
-	cod := (Prompter prompt: 'Ingrese codigo del articulo') asNumber.
-	art := colArticulos detect: [:i | i id = cod] ifNone: [MessageBox notify: 'Articulo no encontrado'].
-	^art!
+	[art isNil] whileTrue: [
+		cod := (Prompter prompt: 'Ingrese codigo del articulo') asNumber.
+		art := colArticulos detect: [:i | i id = cod] ifNone: [
+			MessageBox notify: 'Articulo no encontrado'.
+			art:= nil.
+		].
+	].
+^art!
 
 buscaCli: cod
 	| aux |
@@ -26,8 +31,11 @@ buscaCli: cod
 buscaDistri: cod
 	| dist |
 	dist := colDistribuidores detect: [:i | i id = cod]
-				ifNone: [MessageBox notify: 'Distribuidor no encontrado'].
-	^dist!
+	ifNone: [
+		MessageBox notify: 'Distribuidor no encontrado'. 
+		dist:= nil.
+	].
+^dist!
 
 cargaArticulos
 	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
@@ -86,7 +94,7 @@ colArticulos add: aux.
 "Atun"
 aux:= ArtFrio new.
 aux id: AAArticulo generarId.
-aux descripcion: 'Atun'.
+aux descripcion: 'Atun   '.
 aux precio: 25.
 aux peso: 1.
 colArticulos add: aux.
@@ -116,7 +124,7 @@ colArticulos add: aux.
 "Yerba"
 aux:= AAArticulo new.
 aux id: AAArticulo generarId.
-aux descripcion: 'Yerba'.
+aux descripcion: 'Yerba '.
 aux precio: 18.
 colArticulos add: aux.
 
@@ -220,6 +228,7 @@ menu
 
 mostrarColArticulos
 
+Transcript show: 'ARTICULOS ______________________________'; cr.
 Transcript show: 'id: ', '	Descripcion: ', '	Precio: ', '		Peso:'; cr .
 colArticulos do: [
 	:i | i showTranscript. Transcript cr. 
@@ -242,30 +251,49 @@ colClientes do: [
 mostrarColVenta
 
 Transcript show: '	';cr .
-Transcript show: 'Ventas __________________________________'; cr.
-Transcript show: 'Cliente: ', '	Distribuidor: ', '		Fecha: ','		PrecioTotal: '; cr .
+Transcript show: 'VENTAS __________________________________'; cr.
+
 colVentas do: [
-	:i | Transcript show:((i cliente)nombre),'		',(i distribuidor)nombre,'	', (i calculaPrecio)printString ;cr.
-	Transcript show: 'Articulos: ';cr.
-	(i colArticulos) do: [ :e |Transcript  show: (e id printString),'	',(e descripcion),'	', (e precio printString);cr. ].
+	:i |	i showTranscript.
+
 ].!
 
+mostrarVentaDistri: distrID
+"Recibe el id de un distribuidor y filtra colVentas para obtener una coleccion
+con solo valores que le corresponden a ese distribuidor y llama al showTranscript
+para mostrar en ventas."
+|aux|
+aux:= colVentas select: [:i | (i distribuidor) id == distrID ].
+aux do:[
+	:i | i showTranscript.
+] !
+
 registrarVenta
-	|cli dist venta art fecha1|
+	|cli dist venta art|
+	
+	"Inicio Venta"
+	venta := AAVenta new.
+	venta inicio.
+	venta fecha: Date today.
+
+	"Tendriamos que ver si queremos hacer un while NIl para chequear clientes tambien ?"
 	cli := self buscaCli: (Prompter prompt: 'Ingrese clave del Cliente').
 	(cli isNil)ifTrue:[
 		MessageBox notify: 'Cliente no Encontrado. Se lo va a ingresar.'.
 	]
 	ifFalse:[
-	dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
-	venta := AAVenta new.
-	venta inicio.
-	fecha1:=Date fromString: (Prompter prompt: 'DD/MM/AAAA').
+	venta cliente: cli. "Como encontro el cliente entonces se lo asigno a el auxiliar venta." 
+
+	"Necesito un distribuidor, no puede haber ventas sin distribuidor, uso un whileTrue para poner distribuidor."
+	[dist isNil] whileTrue:[
+		dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
+	].
+	venta distribuidor: dist.
+
 	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
-	art := self buscaArticulo.
-	venta
-		cargaDatos: cli and: dist and: fecha1;
-		asignaArt: art.
+	"buscaArticulo es el unico metodo sin parametros de los busca xq hicimos el prompter adentro."
+		art := self buscaArticulo.
+		venta asignaArt: art.
 	].
 	colVentas add: venta.
 	]! !
@@ -283,6 +311,7 @@ menu!public! !
 mostrarColArticulos!public! !
 mostrarColPersonas!public! !
 mostrarColVenta!public! !
+mostrarVentaDistri:!public! !
 registrarVenta!public! !
 !
 

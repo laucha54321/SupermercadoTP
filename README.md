@@ -10,11 +10,11 @@
 - Crear las claves de ususario unicas.
 - Validar las cosas ingresadas por prompter.
 - Agregar las 2 flechas en el diagrama y agregar lo que falta.
-- Configurar la fecha de ventas automaticamente.
+- ~~Configurar la fecha de ventas automaticamente.~~
 - Terminar registrarVentas
   - ~~Calcular Precio Total.~~
   - ~~Mostrar Ventas con Detalle.~~
-  - buscaArticulo y buscaDistri: tienen que no permitir incorrectos con un while.
+  - ~~buscaArticulo y buscaDistri: tienen que no permitir incorrectos con un while.~~
   - Validar que compren algo xq si no se registran igual.
 - mostrarColVentas
   - ~~Tira error cuando no encuentra el objeto registrar ventas(cuando las quiere mostrar).~~

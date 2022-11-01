@@ -85,7 +85,7 @@ colArticulos add: aux.
 
 "Atun"
 aux:= ArtFrio new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Atun'.
 aux precio: 25.
 aux peso: 1.
@@ -93,7 +93,7 @@ colArticulos add: aux.
 
 "Helado"
 aux:= ArtFrio new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Helado'.
 aux precio: 18.
 aux peso: 3.
@@ -101,21 +101,21 @@ colArticulos add: aux.
 
 "Bicicleta"
 aux:= AAArticulo new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Bicicleta'.
 aux precio: 1800.
 colArticulos add: aux.
 
 "Heladera"
 aux:= AAArticulo new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Heladera'.
 aux precio: 2500.
 colArticulos add: aux.
 
 "Yerba"
 aux:= AAArticulo new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Yerba'.
 aux precio: 18.
 colArticulos add: aux.
@@ -222,8 +222,7 @@ mostrarColArticulos
 
 Transcript show: 'id: ', '	Descripcion: ', '	Precio: ', '		Peso:'; cr .
 colArticulos do: [
-	:i | i showTranscript.
-	Transcript cr.
+	:i | i showTranscript. Transcript cr. 
 ].!
 
 mostrarColPersonas
@@ -244,25 +243,28 @@ mostrarColVenta
 
 Transcript show: '	';cr .
 Transcript show: 'Ventas __________________________________'; cr.
-Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
+Transcript show: 'Cliente: ', '	Distribuidor: ', '		Fecha: ','		PrecioTotal: '; cr .
 colVentas do: [
-	:i | Transcript show:((i cliente)nombre);cr.
+	:i | Transcript show:((i cliente)nombre),'		',(i distribuidor)nombre,'	', (i calculaPrecio)printString ;cr.
+	Transcript show: 'Articulos: ';cr.
+	(i colArticulos) do: [ :e |Transcript  show: (e id printString),'	',(e descripcion),'	', (e precio printString);cr. ].
 ].!
 
 registrarVenta
-	|cli dist venta art |
+	|cli dist venta art fecha1|
 	cli := self buscaCli: (Prompter prompt: 'Ingrese clave del Cliente').
 	(cli isNil)ifTrue:[
 		MessageBox notify: 'Cliente no Encontrado. Se lo va a ingresar.'.
 	]
 	ifFalse:[
 	dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
-	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
-	art := self buscaArticulo.
 	venta := AAVenta new.
 	venta inicio.
+	fecha1:=Date fromString: (Prompter prompt: 'DD/MM/AAAA').
+	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
+	art := self buscaArticulo.
 	venta
-		cargaDatos: cli and: dist;
+		cargaDatos: cli and: dist and: fecha1;
 		asignaArt: art.
 	].
 	colVentas add: venta.

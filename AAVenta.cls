@@ -13,13 +13,33 @@ AAVenta comment: ''!
 asignaArt: arti
 	colArticulos add: arti.!
 
-cargaDatos: clie and: dist
+calculaPrecio
+|acum|
+acum:=0.
+colArticulos do:[
+	:i|acum := acum+(i precio).
+].
+^acum!
+
+cargaDatos: clie and: dist and: fecha1
 	cliente := clie.
 	distribuidor := dist.
-	fecha:=Date fromString: (Prompter prompt: 'DD/MM/AAAA').!
+	fecha:=fecha1.!
 
 cliente
 	^cliente!
+
+colArticulos
+	^colArticulos!
+
+colArticulos: anObject
+	colArticulos := anObject!
+
+distribuidor
+	^distribuidor!
+
+fecha
+	^fecha!
 
 inicio
 	""
@@ -28,20 +48,17 @@ inicio
 
 listar
 ""
-colArticulos do:  [:i | MessageBox notify:  'id', i id ].  !
-
-oDistribuidor
-	^distribuidor!
-
-oFecha
-	^fecha! !
+colArticulos do:  [:i | MessageBox notify:  'id', i id ].  ! !
 !AAVenta categoriesForMethods!
 asignaArt:!public! !
-cargaDatos:and:!public! !
+calculaPrecio!public! !
+cargaDatos:and:and:!public! !
 cliente!public! !
+colArticulos!accessing!public! !
+colArticulos:!accessing!public! !
+distribuidor!public! !
+fecha!public! !
 inicio!public! !
 listar!public! !
-oDistribuidor!public! !
-oFecha!public! !
 !
 

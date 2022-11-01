@@ -28,9 +28,6 @@ id
 id: anObject
 	id := anObject!
 
-peso
-^'-'!
-
 precio
 	^precio!
 
@@ -45,7 +42,6 @@ descripcion!public! !
 descripcion:!public! !
 id!public! !
 id:!public! !
-peso!public! !
 precio!public! !
 precio:!public! !
 showTranscript!public! !

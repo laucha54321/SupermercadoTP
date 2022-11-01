@@ -52,7 +52,7 @@ cargaArticulos
 self menu.	!
 
 cargaCliente
-	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
+
 	| cli clave aux |
 	clave := (Prompter prompt: 'Ingrese su clave de usuario').
 	aux := self buscaCli: clave.
@@ -300,7 +300,9 @@ registrarVenta
 		art := self buscaArticulo.
 		venta asignaArt: art.
 	].
-	colVentas add: venta.
+	"Si la coleccion esta vacia significa que no compro nada. Entonces no registro la venta."
+	(venta colArticulos notEmpty)ifTrue: [colVentas add: venta.]
+	ifFalse:[MessageBox notify: 'No compro nada. La venta no se va a registrar.' ]
 	]! !
 !AASupermercado categoriesForMethods!
 buscaArticulo!public! !

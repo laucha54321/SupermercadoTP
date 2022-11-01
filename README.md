@@ -6,7 +6,7 @@
 # Cosas que hacer
 
 - ~~En vez de usar isMemberOf usar un metodo polimorfico que escriba en el transcript~~
-- Iniciar las variables de la manera mas aburrida :( .
+- ~~Iniciar las variables de la manera mas aburrida :( .~~
 - Crear las claves de ususario unicas
 - Agregar las 2 flechas en el diagrama y agregar lo que falta.
 - Configurar la fecha de ventas automaticamente.

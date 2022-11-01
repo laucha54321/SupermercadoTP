@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #AASupermercado
 	instanceVariableNames: 'colArticulos colClientes colDistribuidores colVentas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AASupermercado guid: (GUID fromString: '{BC0E356D-DFAF-45AD-ACCD-B469E2B68BE3}')!
+AASupermercado guid: (GUID fromString: '{bc0e356d-dfaf-45ad-accd-b469e2b68be3}')!
 AASupermercado comment: ''!
 !AASupermercado categoriesForClass!Kernel-Objects! !
 !AASupermercado methodsFor!
@@ -20,8 +20,7 @@ buscaCli: cod
 	| aux |
 	aux := colClientes detect: [:i | i id = cod]
 				ifNone: 
-					[MessageBox notify: 'Cliente no Encontrado. Se lo va a ingresar.'.
-					aux := nil].
+					[aux := nil].
 	^aux!
 
 buscaDistri: cod
@@ -33,20 +32,21 @@ buscaDistri: cod
 cargaArticulos
 	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
 	| art op |
-	colArticulos ifNil: [colArticulos := OrderedCollection new].
 	op := 1.
 	[op = 0] whileFalse: 
 			[art := MessageBox confirm: 'Es un articulo frio?'.
 			art ifFalse: [art := AAArticulo new] ifTrue: [art := ArtFrio new].
 			art cargaDatos.
 			colArticulos add: art.
-			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber]!
+			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber
+	
+].
+self menu.	!
 
 cargaCliente
 	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
 	| cli clave aux |
-	colClientes ifNil: [colClientes := OrderedCollection new].
-	clave := (Prompter prompt: 'Ingrese su clave de usuario') asNumber asInteger.
+	clave := (Prompter prompt: 'Ingrese su clave de usuario').
 	aux := self buscaCli: clave.
 	aux isNil
 		ifTrue: 
@@ -60,9 +60,6 @@ cargaCliente
 cargaDistribuidor
 |aux|
 "Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
-(colDistribuidores )ifNil:[
-	colDistribuidores :=OrderedCollection new.
-].
 
 aux :=Distribuidor new.
 aux cargaDatos.
@@ -78,30 +75,123 @@ cargarDatosPrueba
 (colArticulos)ifNil:[
 	colArticulos:=OrderedCollection new.
 ].
+"Tomate"
+aux:= ArtFrio new.
+aux id: Articulo generarId.
+aux descripcion: 'Tomate'.
+aux precio: 12.
+aux peso: 2.
+colArticulos add: aux.
+
+"Atun"
+aux:= ArtFrio new.
+aux id: Articulo generarId.
+aux descripcion: 'Atun'.
+aux precio: 25.
+aux peso: 1.
+colArticulos add: aux.
+
+"Helado"
+aux:= ArtFrio new.
+aux id: Articulo generarId.
+aux descripcion: 'Helado'.
+aux precio: 18.
+aux peso: 3.
+colArticulos add: aux.
+
+"Bicicleta"
+aux:= Articulo new.
+aux id: Articulo generarId.
+aux descripcion: 'Bicicleta'.
+aux precio: 1800.
+colArticulos add: aux.
+
+"Heladera"
+aux:= Articulo new.
+aux id: Articulo generarId.
+aux descripcion: 'Heladera'.
+aux precio: 2500.
+colArticulos add: aux.
+
+"Yerba"
+aux:= Articulo new.
+aux id: Articulo generarId.
+aux descripcion: 'Yerba'.
+aux precio: 18.
+colArticulos add: aux.
 
 
 
 "Clientes ___________________________________________________________"
 (colClientes )ifNil:[
-	colClientes =OrderedCollection new.
+	colClientes :=OrderedCollection new.
 ].
+"Pedro Couvier"
+aux:=Cliente new.
+aux nombre: 'Pedro Couvier'.
+aux zona:'Centro 1'.
+aux id: '1'.
+aux domicilio: 'Balcarce 21'.
+colClientes add: aux.
+
+"Pedro Picapiedra"
+aux:=Cliente new.
+aux nombre: 'Pedro Picapiedra'.
+aux zona:'Fisherton'.
+aux id: '2'.
+aux domicilio: 'Av. San Martin 12'.
+colClientes add: aux.
+
+"Martin Martinez"
+aux:=Cliente new.
+aux nombre: 'Martin Martinez'.
+aux zona:'Uriquiza'.
+aux id: '3'.
+aux domicilio: 'Mitre 201'.
+colClientes add: aux.
+
+
 
 
 "Distribuidores _____________________________________________________"
 (colDistribuidores)ifNil:[
-	colDistribuidores =OrderedCollection new.
+	colDistribuidores :=OrderedCollection new.
 ].
 
+"Pedro Perez"
+aux:=Distribuidor new.
+aux nombre: 'Pedro Perez'.
+aux zona:'Uriquiza'.
+aux id: 1.
+aux valorEntrega: 12.
+colDistribuidores add: aux.
 
-"Ventas_____________________________________________________________"
+"Marta Tarta"
+aux:=Distribuidor new.
+aux nombre: 'Marta Tarta'.
+aux zona:'Centro 1'.
+aux id: 2.
+aux valorEntrega: 15.
+colDistribuidores add: aux.
+"
+Ventas_____________________________________________________________
 (colVentas)ifNil:[
 	colVentas:=OrderedCollection new.
-].
+]."
 
 !
 
 inicia
-colVentas:= OrderedCollection new.!
+
+AAArticulo inicio.
+ArtFrio porcentajeAsignar.
+
+colArticulos := OrderedCollection new.
+colDistribuidores :=OrderedCollection new.
+colClientes := OrderedCollection new.
+colVentas:= OrderedCollection new.
+
+self cargarDatosPrueba.!
 
 listadoVentas
 	| fecha distruiduidor ventas |
@@ -123,12 +213,13 @@ menu
 							asNumber asInteger.
 			op = 1 ifTrue: [self cargaArticulos].
 			op = 2 ifTrue: [self cargaCliente].
-			(op := 3) ifTrue: [self registrarVenta].
-			op = 4 ifTrue: [self listadoVentas]]!
+			op = 3 ifTrue: [self registrarVenta].
+			op = 4 ifTrue: [self listadoVentas].
+			].
+			MessageBox notify: 'Hasta Luego'.!
 
 mostrarColArticulos
 
-Transcript clear.
 Transcript show: 'id: ', '	Descripcion: ', '	Precio: ', '		Peso:'; cr .
 colArticulos do: [
 	:i | Transcript show:(i id printString),'	', (i descripcion),'		', (i precio printString),'		'.
@@ -138,41 +229,59 @@ colArticulos do: [
 
 mostrarColPersonas
 
-Transcript clear.
 Transcript show: 'DISTRIBUIDORES ______________________________'; cr.
 Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Valor Entrega:'; cr .
 colDistribuidores do: [
-	:i |Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i valorEntrega).
+	:i |Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i valorEntrega printString );cr.
 ].
 Transcript show: '	';cr .
 Transcript show: 'CLIENTES __________________________________'; cr.
 Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
 colClientes do: [
-	:i | Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i domicilio).
+	:i | Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i domicilio);cr.
+].!
+
+mostrarColVenta
+
+Transcript show: '	';cr .
+Transcript show: 'Ventas __________________________________'; cr.
+Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
+colVentas do: [
+	:i | Transcript show:((i cliente)nombre);cr.
 ].!
 
 registrarVenta
-	| aux aux2 cli dist venta art |
-	aux := (Prompter prompt: 'Ingrese clave del Cliente') asNumber.
-	aux2 := (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
-	cli := self buscaCli: aux.
-	dist := self buscaDistri: aux2.
+	|cli dist venta art |
+	cli := self buscaCli: (Prompter prompt: 'Ingrese clave del Cliente').
+	(cli isNil)ifTrue:[
+		MessageBox notify: 'Cliente no Encontrado. Se lo va a ingresar.'.
+	]
+	ifFalse:[
+	dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor') asNumber.
+	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
 	art := self buscaArticulo.
 	venta := AAVenta new.
+	venta inicio.
 	venta
 		cargaDatos: cli and: dist;
-		asignaArt: art! !
-!AASupermercado categoriesFor: #buscaArticulo!public! !
-!AASupermercado categoriesFor: #buscaCli:!public! !
-!AASupermercado categoriesFor: #buscaDistri:!public! !
-!AASupermercado categoriesFor: #cargaArticulos!public! !
-!AASupermercado categoriesFor: #cargaCliente!public! !
-!AASupermercado categoriesFor: #cargaDistribuidor!public! !
-!AASupermercado categoriesFor: #cargarDatosPrueba!public! !
-!AASupermercado categoriesFor: #inicia!public! !
-!AASupermercado categoriesFor: #listadoVentas!public! !
-!AASupermercado categoriesFor: #menu!public! !
-!AASupermercado categoriesFor: #mostrarColArticulos!public! !
-!AASupermercado categoriesFor: #mostrarColPersonas!public! !
-!AASupermercado categoriesFor: #registrarVenta!public! !
+		asignaArt: art.
+	].
+	colVentas add: venta.
+	]! !
+!AASupermercado categoriesForMethods!
+buscaArticulo!public! !
+buscaCli:!public! !
+buscaDistri:!public! !
+cargaArticulos!public! !
+cargaCliente!public! !
+cargaDistribuidor!public! !
+cargarDatosPrueba!public! !
+inicia!public! !
+listadoVentas!public! !
+menu!public! !
+mostrarColArticulos!public! !
+mostrarColPersonas!public! !
+mostrarColVenta!public! !
+registrarVenta!public! !
+!
 

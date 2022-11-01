@@ -14,3 +14,9 @@
 - Terminar registrarVentas
   - ~~Calcular Precio Total.~~
   - ~~Mostrar Ventas con Detalle.~~
+  - buscaArticulo y buscaDistri: tienen que no permitir incorrectos con un while.
+  - Validar que compren algo xq si no se registran igual.
+- mostrarColVentas
+  - ~~Tira error cuando no encuentra el objeto registrar ventas(cuando las quiere mostrar).~~
+  - ~~Fecha se agrega automaticamente.~~
+  - Hay que ver si queremos filtrar en base a la fecha ademas del distribuidor o con que esten ordenadas esta bien.

@@ -138,7 +138,7 @@ colArticulos add: aux.
 aux:=Cliente new.
 aux nombre: 'Pedro Couvier'.
 aux zona:'Centro 1'.
-aux id: '1'.
+aux id: 'pedroCouvier1'.
 aux domicilio: 'Balcarce 21'.
 colClientes add: aux.
 
@@ -146,7 +146,7 @@ colClientes add: aux.
 aux:=Cliente new.
 aux nombre: 'Pedro Picapiedra'.
 aux zona:'Fisherton'.
-aux id: '2'.
+aux id: 'pedrito21'.
 aux domicilio: 'Av. San Martin 12'.
 colClientes add: aux.
 
@@ -154,7 +154,7 @@ colClientes add: aux.
 aux:=Cliente new.
 aux nombre: 'Martin Martinez'.
 aux zona:'Uriquiza'.
-aux id: '3'.
+aux id: 'martinmartin2'.
 aux domicilio: 'Mitre 201'.
 colClientes add: aux.
 
@@ -199,7 +199,11 @@ colDistribuidores :=OrderedCollection new.
 colClientes := OrderedCollection new.
 colVentas:= OrderedCollection new.
 
-self cargarDatosPrueba.!
+self cargarDatosPrueba.
+
+"Hay que sacar esto del inicia despues lo pongo aca para ahorrame escribirlo en el workspace."
+self mostrarColArticulos.
+self mostrarColPersonas.!
 
 listadoVentas
 	| fecha distruiduidor ventas |
@@ -222,7 +226,7 @@ menu
 			op = 1 ifTrue: [self cargaArticulos].
 			op = 2 ifTrue: [self cargaCliente].
 			op = 3 ifTrue: [self registrarVenta].
-			op = 4 ifTrue: [self listadoVentas].
+			op = 4 ifTrue: [self mostrarVentaDistri ].
 			].
 			MessageBox notify: 'Hasta Luego'.!
 
@@ -243,7 +247,7 @@ colDistribuidores do: [
 ].
 Transcript show: '	';cr .
 Transcript show: 'CLIENTES __________________________________'; cr.
-Transcript show: 'id: ', '	Nombre: ', '		Zona: ', '		Domicilio: '; cr .
+Transcript show: 'id: ', '		Nombre: ', '		Zona: ', '		Domicilio: '; cr .
 colClientes do: [
 	:i | Transcript show:(i id printString),'	', (i nombre),'		', (i zona),'		',(i domicilio);cr.
 ].!
@@ -258,12 +262,13 @@ colVentas do: [
 
 ].!
 
-mostrarVentaDistri: distrID
+mostrarVentaDistri
 "Recibe el id de un distribuidor y filtra colVentas para obtener una coleccion
 con solo valores que le corresponden a ese distribuidor y llama al showTranscript
 para mostrar en ventas."
-|aux|
-aux:= colVentas select: [:i | (i distribuidor) id == distrID ].
+|aux aux2|
+aux2 :=self buscaDistri:(Prompter prompt:'Ingrese id Distribuidor')asNumber.
+aux:= colVentas select: [:i | (i distribuidor) id ==  aux2 id].
 aux do:[
 	:i | i showTranscript.
 ] !
@@ -311,7 +316,7 @@ menu!public! !
 mostrarColArticulos!public! !
 mostrarColPersonas!public! !
 mostrarColVenta!public! !
-mostrarVentaDistri:!public! !
+mostrarVentaDistri!public! !
 registrarVenta!public! !
 !
 

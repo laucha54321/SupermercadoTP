@@ -14,3 +14,6 @@
 - Terminar registrarVentas
   - ~~Calcular Precio Total.~~
   - ~~Mostrar Ventas con Detalle.~~
+- mostrarColVentas
+  - Tira error cuando no encuentra el objeto registrar ventas(cuando las quiere mostrar).
+  - Arreglar la fecha.

@@ -16,4 +16,5 @@
   - ~~Mostrar Ventas con Detalle.~~
 - mostrarColVentas
   - ~~Tira error cuando no encuentra el objeto registrar ventas(cuando las quiere mostrar).~~
-  - Arreglar la fecha.
+  - ~~Fecha se agrega automaticamente.~~
+  - Hay que ver si queremos filtrar en base a la fecha ademas del distribuidor o con que esten ordenadas esta bien.

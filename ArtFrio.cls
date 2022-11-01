@@ -26,13 +26,18 @@ peso: anObject
 
 precio
 Porcentaje:=0.4.
-^(precio + (peso * Porcentaje)).! !
+^(precio + (peso * Porcentaje)).!
+
+showTranscript
+super showTranscript.
+Transcript show:(peso printString).! !
 !ArtFrio categoriesForMethods!
 cargaArticulo!public! !
 cargaDatos!public! !
 peso!public! !
 peso:!public! !
 precio!public! !
+showTranscript!public! !
 !
 
 !ArtFrio class methodsFor!

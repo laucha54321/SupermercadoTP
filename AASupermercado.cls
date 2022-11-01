@@ -77,7 +77,7 @@ cargarDatosPrueba
 ].
 "Tomate"
 aux:= ArtFrio new.
-aux id: Articulo generarId.
+aux id: AAArticulo generarId.
 aux descripcion: 'Tomate'.
 aux precio: 12.
 aux peso: 2.
@@ -100,21 +100,21 @@ aux peso: 3.
 colArticulos add: aux.
 
 "Bicicleta"
-aux:= Articulo new.
+aux:= AAArticulo new.
 aux id: Articulo generarId.
 aux descripcion: 'Bicicleta'.
 aux precio: 1800.
 colArticulos add: aux.
 
 "Heladera"
-aux:= Articulo new.
+aux:= AAArticulo new.
 aux id: Articulo generarId.
 aux descripcion: 'Heladera'.
 aux precio: 2500.
 colArticulos add: aux.
 
 "Yerba"
-aux:= Articulo new.
+aux:= AAArticulo new.
 aux id: Articulo generarId.
 aux descripcion: 'Yerba'.
 aux precio: 18.
@@ -222,8 +222,7 @@ mostrarColArticulos
 
 Transcript show: 'id: ', '	Descripcion: ', '	Precio: ', '		Peso:'; cr .
 colArticulos do: [
-	:i | Transcript show:(i id printString),'	', (i descripcion),'		', (i precio printString),'		'.
-	 (i isMemberOf: ArtFrio)ifTrue: [ Transcript show: (i peso printString). ] .
+	:i | i showTranscript.
 	Transcript cr.
 ].!
 

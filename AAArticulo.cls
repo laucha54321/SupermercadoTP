@@ -28,19 +28,27 @@ id
 id: anObject
 	id := anObject!
 
+peso
+^'-'!
+
 precio
 	^precio!
 
 precio: anObject
-	precio := anObject! !
+	precio := anObject!
+
+showTranscript
+Transcript show:(id printString),'	', (descripcion ),'		', (precio printString),'		'.! !
 !AAArticulo categoriesForMethods!
 cargaDatos!public! !
 descripcion!public! !
 descripcion:!public! !
 id!public! !
 id:!public! !
+peso!public! !
 precio!public! !
 precio:!public! !
+showTranscript!public! !
 !
 
 !AAArticulo class methodsFor!

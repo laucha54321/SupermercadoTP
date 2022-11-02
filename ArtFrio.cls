@@ -1,18 +1,14 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AAArticulo subclass: #ArtFrio
 	instanceVariableNames: 'peso'
 	classVariableNames: 'Porcentaje'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArtFrio guid: (GUID fromString: '{6b9a1eb6-ef3a-424b-a4ed-a05de3b2544d}')!
+ArtFrio guid: (GUID fromString: '{6B9A1EB6-EF3A-424B-A4ED-A05DE3B2544D}')!
 ArtFrio comment: ''!
 !ArtFrio categoriesForClass!Kernel-Objects! !
 !ArtFrio methodsFor!
-
-cargaArticulo
-super cargaArticulo.
-peso:=(Prompter prompt: 'Ingrese el Peso: ') asNumber asFloat.!
 
 cargaDatos
 super cargaDatos.
@@ -34,15 +30,12 @@ precio
 showTranscript
 super showTranscript.
 Transcript show:(peso printString).! !
-!ArtFrio categoriesForMethods!
-cargaArticulo!public! !
-cargaDatos!public! !
-peso!public! !
-peso:!public! !
-porcentajeAsignar!public! !
-precio!public! !
-showTranscript!public! !
-!
+!ArtFrio categoriesFor: #cargaDatos!public! !
+!ArtFrio categoriesFor: #peso!public! !
+!ArtFrio categoriesFor: #peso:!public! !
+!ArtFrio categoriesFor: #porcentajeAsignar!public! !
+!ArtFrio categoriesFor: #precio!public! !
+!ArtFrio categoriesFor: #showTranscript!public! !
 
 !ArtFrio class methodsFor!
 
@@ -51,8 +44,6 @@ porcentaje
 
 porcentajeAsignar
 Porcentaje:=0.4.! !
-!ArtFrio class categoriesForMethods!
-porcentaje!accessing!private! !
-porcentajeAsignar!accessing!private! !
-!
+!ArtFrio class categoriesFor: #porcentaje!public! !
+!ArtFrio class categoriesFor: #porcentajeAsignar!public! !
 

@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AAPersona
 	instanceVariableNames: 'nombre zona'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AAPersona guid: (GUID fromString: '{0120f0c3-a0f4-4604-a7af-2db88f2647e6}')!
+AAPersona guid: (GUID fromString: '{0120F0C3-A0F4-4604-A7AF-2DB88F2647E6}')!
 AAPersona comment: ''!
 !AAPersona categoriesForClass!Kernel-Objects! !
 !AAPersona methodsFor!
@@ -25,11 +25,9 @@ zona
 
 zona: anObject
 	zona := anObject! !
-!AAPersona categoriesForMethods!
-cargaDatos!public! !
-nombre!public! !
-nombre:!public! !
-zona!public! !
-zona:!public! !
-!
+!AAPersona categoriesFor: #cargaDatos!public! !
+!AAPersona categoriesFor: #nombre!public! !
+!AAPersona categoriesFor: #nombre:!public! !
+!AAPersona categoriesFor: #zona!public! !
+!AAPersona categoriesFor: #zona:!public! !
 

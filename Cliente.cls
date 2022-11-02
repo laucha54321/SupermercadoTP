@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AAPersona subclass: #Cliente
 	instanceVariableNames: 'id domicilio'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Cliente guid: (GUID fromString: '{eb69b218-a06d-4675-8893-5120f943f110}')!
+Cliente guid: (GUID fromString: '{EB69B218-A06D-4675-8893-5120F943F110}')!
 Cliente comment: ''!
 !Cliente categoriesForClass!Kernel-Objects! !
 !Cliente methodsFor!
@@ -26,11 +26,9 @@ id
 
 id: anObject
 	id := anObject! !
-!Cliente categoriesForMethods!
-cargaDatos:!public! !
-domicilio!public! !
-domicilio:!public! !
-id!public! !
-id:!public! !
-!
+!Cliente categoriesFor: #cargaDatos:!public! !
+!Cliente categoriesFor: #domicilio!public! !
+!Cliente categoriesFor: #domicilio:!public! !
+!Cliente categoriesFor: #id!public! !
+!Cliente categoriesFor: #id:!public! !
 

@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AAVenta
 	instanceVariableNames: 'fecha cliente distribuidor colArticulos'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AAVenta guid: (GUID fromString: '{54523e07-2406-4cd3-bc10-9be98bb7a9a8}')!
+AAVenta guid: (GUID fromString: '{54523E07-2406-4CD3-BC10-9BE98BB7A9A8}')!
 AAVenta comment: ''!
 !AAVenta categoriesForClass!Kernel-Objects! !
 !AAVenta methodsFor!
@@ -48,7 +48,9 @@ fecha: anObject
 inicio
 	""
 
-	colArticulos := OrderedCollection new!
+	colArticulos := SortedCollection new.
+	colArticulos sortBlock: [:a :b| a id < b id].
+	!
 
 showTranscript
 	Transcript show:'	';cr;cr;show: '_________________________________________________________________';cr; show: '_________________________________________________________________';cr.
@@ -59,18 +61,16 @@ showTranscript
 	(colArticulos) do: [ :e |Transcript  show: (e id printString),'.  ',(e descripcion),'		', (e precio printString);cr. ].
 	Transcript show:''; cr; show:'TOTAL:		',(self calculaPrecio)printString. 
 	Transcript show:'	';cr;cr;show: '_________________________________________________________________';cr; show: '_________________________________________________________________';cr.! !
-!AAVenta categoriesForMethods!
-asignaArt:!public! !
-calculaPrecio!public! !
-cliente!public! !
-cliente:!accessing!public! !
-colArticulos!accessing!public! !
-colArticulos:!accessing!public! !
-distribuidor!public! !
-distribuidor:!accessing!public! !
-fecha!public! !
-fecha:!accessing!public! !
-inicio!public! !
-showTranscript!public! !
-!
+!AAVenta categoriesFor: #asignaArt:!public! !
+!AAVenta categoriesFor: #calculaPrecio!public! !
+!AAVenta categoriesFor: #cliente!public! !
+!AAVenta categoriesFor: #cliente:!public! !
+!AAVenta categoriesFor: #colArticulos!public! !
+!AAVenta categoriesFor: #colArticulos:!public! !
+!AAVenta categoriesFor: #distribuidor!public! !
+!AAVenta categoriesFor: #distribuidor:!public! !
+!AAVenta categoriesFor: #fecha!public! !
+!AAVenta categoriesFor: #fecha:!public! !
+!AAVenta categoriesFor: #inicio!public! !
+!AAVenta categoriesFor: #showTranscript!public! !
 

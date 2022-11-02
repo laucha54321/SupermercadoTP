@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AAArticulo
 	instanceVariableNames: 'descripcion precio id'
 	classVariableNames: 'Contador'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AAArticulo guid: (GUID fromString: '{c930734f-4d43-408c-a2d8-336b1692c2d5}')!
+AAArticulo guid: (GUID fromString: '{C930734F-4D43-408C-A2D8-336B1692C2D5}')!
 AAArticulo comment: ''!
 !AAArticulo categoriesForClass!Kernel-Objects! !
 !AAArticulo methodsFor!
@@ -36,29 +36,23 @@ precio: anObject
 
 showTranscript
 Transcript show:(id printString),'	', (descripcion ),'		', (precio printString),'		'.! !
-!AAArticulo categoriesForMethods!
-cargaDatos!public! !
-descripcion!public! !
-descripcion:!public! !
-id!public! !
-id:!public! !
-precio!public! !
-precio:!public! !
-showTranscript!public! !
-!
+!AAArticulo categoriesFor: #cargaDatos!public! !
+!AAArticulo categoriesFor: #descripcion!public! !
+!AAArticulo categoriesFor: #descripcion:!public! !
+!AAArticulo categoriesFor: #id!public! !
+!AAArticulo categoriesFor: #id:!public! !
+!AAArticulo categoriesFor: #precio!public! !
+!AAArticulo categoriesFor: #precio:!public! !
+!AAArticulo categoriesFor: #showTranscript!public! !
 
 !AAArticulo class methodsFor!
 
 generarId
 	Contador:=Contador+1.
-	^ Contador.
-
-!
+	^ Contador.!
 
 inicio
 Contador:=0.! !
-!AAArticulo class categoriesForMethods!
-generarId!public! !
-inicio!public! !
-!
+!AAArticulo class categoriesFor: #generarId!public! !
+!AAArticulo class categoriesFor: #inicio!public! !
 

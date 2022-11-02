@@ -1,25 +1,37 @@
-ï»¿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #AASupermercado
 	instanceVariableNames: 'colArticulos colClientes colDistribuidores colVentas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AASupermercado guid: (GUID fromString: '{bc0e356d-dfaf-45ad-accd-b469e2b68be3}')!
+AASupermercado guid: (GUID fromString: '{BC0E356D-DFAF-45AD-ACCD-B469E2B68BE3}')!
 AASupermercado comment: ''!
 !AASupermercado categoriesForClass!Kernel-Objects! !
 !AASupermercado methodsFor!
 
 buscaArticulo
-	| art cod |
+	| art cod valid|
 	[art isNil] whileTrue: [
-		cod := (Prompter prompt: 'Ingrese codigo del articulo') asNumber.
-		art := colArticulos detect: [:i | i id = cod] ifNone: [
+		cod := (Prompter prompt: 'Ingrese codigo del articulo') .
+		valid := self validarNumber: cod.
+		valid ifFalse:[self buscaArticulo ].
+		valid ifTrue: [
+		art := colArticulos detect: [:i | i id = cod asNumber asInteger ] ifNone: [
 			MessageBox notify: 'Articulo no encontrado'.
 			art:= nil.
 		].
+].
 	].
 ^art!
+
+buscaArticulo: cod
+	| art |
+	art := colArticulos detect: [:i | i id = cod asNumber asInteger]
+				ifNone: 
+					[MessageBox notify: 'Articulo no encontrado'.
+					art := nil].
+	^art!
 
 buscaCli: cod
 	| aux |
@@ -35,6 +47,7 @@ buscaDistri: cod
 		MessageBox notify: 'Distribuidor no encontrado'. 
 		dist:= nil.
 	].
+(dist isNil )ifFalse: [MessageBox notify: 'Distribuidor encontrado' ].
 ^dist!
 
 cargaArticulos
@@ -49,7 +62,7 @@ cargaArticulos
 			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber
 	
 ].
-self menu.	!
+!
 
 cargaCliente
 
@@ -170,7 +183,7 @@ colClientes add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Pedro Perez'.
 aux zona:'Uriquiza'.
-aux id: '1'.
+aux id: 1.
 aux valorEntrega: 12.
 colDistribuidores add: aux.
 
@@ -178,7 +191,7 @@ colDistribuidores add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Marta Tarta'.
 aux zona:'Centro 1'.
-aux id: '2'.
+aux id: 2.
 aux valorEntrega: 15.
 colDistribuidores add: aux.
 "
@@ -242,85 +255,110 @@ colClientes do: [
 ].!
 
 mostrarColVenta
-
 Transcript show: '	';cr .
 Transcript show: 'VENTAS __________________________________'; cr.
 
+(colVentas isNil) ifFalse: [
 colVentas do: [
-	:i |	i showTranscript.
-
-].!
-
-mostrarVentaDistri
-"Recibe el id de un distribuidor y filtra colVentas para obtener una coleccion
-con solo valores que le corresponden a ese distribuidor y llama al showTranscript
-para mostrar en ventas."
-|aux aux2 aux3|
-aux2:=nil.
-(aux2=nil) ifTrue:[
-	aux2 :=self buscaDistri:(Prompter prompt:'Ingrese id Distribuidor').
+	:i |	i showTranscript.].
 ].
-(aux2=nil)ifFalse:[
-	aux3:=Date fromString: (Prompter prompt: 'ingrese fecha de 
-	venta - DD/MM/AAAA').
-	aux:= colVentas select: [:i | (((i fecha)shortString)=(aux3 shortString))&((i distribuidor)id = aux2 id)].
-	aux do:[
-		:i | i showTranscript.
-	].
+(colVentas isNil) ifTrue: [
+Transcript show: 'No hay ventas realizadas para este día'; cr.
 ]
-
 !
 
+mostrarVentaDistri
+	"Recibe el id de un distribuidor y filtra colVentas para obtener una coleccion
+con solo valores que le corresponden a ese distribuidor y llama al showTranscript
+para mostrar en ventas."
+
+	| aux aux2 aux3 valid idDist |
+	Transcript clear.
+	self mostrarColArticulos.
+	aux2 := nil.
+	aux2 = nil
+		ifTrue: 
+			[idDist := Prompter prompt: 'Ingrese id Distribuidor'.
+			valid := self validarNumber: idDist.
+			valid ifFalse: [self registrarVenta].
+			valid ifTrue: [aux2 := self buscaDistri: idDist asNumber]].
+	aux2 = nil
+		ifFalse: 
+			[aux3 := Date fromString: (Prompter prompt: 'ingrese fecha de 
+	venta - DD/MM/AAAA').
+			aux := colVentas
+						select: [:i | i fecha shortString = aux3 shortString & (i distribuidor id = aux2 id)].
+			aux do: [:i | i showTranscript]]!
+
 registrarVenta
-	|cli dist venta art idCliente|
-	
 	"Inicio Venta"
+	| cli dist venta art idCliente valid idDist compra codArt|
 	venta := AAVenta new.
 	venta inicio.
 	venta fecha: Date today.
 	"Busca el cliente"
-	idCliente:= (Prompter prompt: 'Ingrese clave del Cliente').
-	cli := self buscaCli:(idCliente).
-	(cli isNil)ifTrue:[
-		|aux|	
-		MessageBox notify: 'Cliente no Encontrado. Procesada con la creacion de usuario.'.
-		aux := Cliente new.
-		aux cargaDatos:idCliente.
-		colClientes add: aux.
-	]
-	ifFalse:[
-	MessageBox notify: 'Cliente Encontrado. Comenzando venta.'.
-	venta cliente: cli. "Como encontro el cliente entonces se lo asigno a el auxiliar venta." 
+	idCliente := Prompter prompt: 'Ingrese clave del Cliente'.
+	cli := self buscaCli: idCliente.
+	cli isNil
+		ifTrue: 
+			[| aux |
+			MessageBox notify: 'Cliente no Encontrado. Procesada con la creacion de usuario.'.
+			aux := Cliente new.
+			aux cargaDatos: idCliente.
+			colClientes add: aux]
+		ifFalse: 
+			[MessageBox notify: 'Cliente Encontrado. Comenzando venta.'.
+			venta cliente: cli.	"Como encontro el cliente entonces se lo asigno a el auxiliar venta."
 
-	"Necesito un distribuidor, no puede haber ventas sin distribuidor, uso un whileTrue para poner distribuidor."
-	[dist isNil] whileTrue:[
-		dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor').
-	].
-	venta distribuidor: dist.
-	
-	[MessageBox confirm: 'Quiere seguir comprando?' ]whileTrue:[
-	"buscaArticulo es el unico metodo sin parametros de los busca xq hicimos el prompter adentro."
-		art := self buscaArticulo.
-		venta asignaArt: art.
-	].
-	"Si la coleccion esta vacia significa que no compro nada. Entonces no registro la venta."
-	(venta colArticulos notEmpty)ifTrue: [colVentas add: venta.]
-	ifFalse:[MessageBox notify: 'No compro nada. La venta no se va a registrar.' ]
-	]! !
-!AASupermercado categoriesForMethods!
-buscaArticulo!public! !
-buscaCli:!public! !
-buscaDistri:!public! !
-cargaArticulos!public! !
-cargaCliente!public! !
-cargaDistribuidor!public! !
-cargarDatosPrueba!public! !
-inicia!public! !
-menu!public! !
-mostrarColArticulos!public! !
-mostrarColPersonas!public! !
-mostrarColVenta!public! !
-mostrarVentaDistri!public! !
-registrarVenta!public! !
-!
+			"Necesito un distribuidor, no puede haber ventas sin distribuidor, uso un whileTrue para poner distribuidor."
+			dist := nil.
+			[dist isNil] whileTrue: 
+					[idDist := Prompter prompt: 'Ingrese codigo del distribuidor'.
+					valid := self validarNumber: idDist.
+					valid ifFalse: [dist := nil ].
+					valid ifTrue: [dist := self buscaDistri: idDist asNumber ]].
+
+
+			"dist := self buscaDistri: (Prompter prompt: 'Ingrese codigo del distribuidor')."
+			venta distribuidor: dist.
+			compra:= true.
+			"Ingresamos el codigo del articulo, validamos y buscamos pasando el codigo por parametro"
+			[compra ] whileTrue: [
+					codArt := (Prompter prompt: 'Ingrese codigo del articulo') .
+					valid := self validarNumber: codArt.
+					valid ifFalse:[compra:= MessageBox confirm: 'Quiere seguir comprando?' ].
+					valid ifTrue: [
+					art := self buscaArticulo:codArt.
+					(art = nil)ifTrue: [compra := true ].
+					(art = nil)ifFalse: [  
+					venta asignaArt: art.
+					compra:= MessageBox confirm: 'Quiere seguir comprando?'.].].
+].
+			"Si la coleccion esta vacia significa que no compro nada. Entonces no registro la venta."
+			venta colArticulos notEmpty
+				ifTrue: [ colVentas add: venta]
+				ifFalse: [MessageBox notify: 'No compro nada. La venta no se va a registrar.']]!
+
+validarNumber: codigo
+[	
+	codigo asNumber isKindOf: Integer.
+	^true.
+]on: InvalidFormat  do: [:e| MessageBox notify: 'El dato ingresado debe ser entero'.
+	^false. ].! !
+!AASupermercado categoriesFor: #buscaArticulo!public! !
+!AASupermercado categoriesFor: #buscaArticulo:!public! !
+!AASupermercado categoriesFor: #buscaCli:!public! !
+!AASupermercado categoriesFor: #buscaDistri:!public! !
+!AASupermercado categoriesFor: #cargaArticulos!public! !
+!AASupermercado categoriesFor: #cargaCliente!public! !
+!AASupermercado categoriesFor: #cargaDistribuidor!public! !
+!AASupermercado categoriesFor: #cargarDatosPrueba!public! !
+!AASupermercado categoriesFor: #inicia!public! !
+!AASupermercado categoriesFor: #menu!public! !
+!AASupermercado categoriesFor: #mostrarColArticulos!public! !
+!AASupermercado categoriesFor: #mostrarColPersonas!public! !
+!AASupermercado categoriesFor: #mostrarColVenta!public! !
+!AASupermercado categoriesFor: #mostrarVentaDistri!public! !
+!AASupermercado categoriesFor: #registrarVenta!public! !
+!AASupermercado categoriesFor: #validarNumber:!public! !
 

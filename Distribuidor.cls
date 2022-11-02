@@ -1,11 +1,11 @@
-﻿"Filed out from Dolphin Smalltalk"!
+"Filed out from Dolphin Smalltalk 7"!
 
 AAPersona subclass: #Distribuidor
 	instanceVariableNames: 'id valorEntrega'
 	classVariableNames: 'Contador'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Distribuidor guid: (GUID fromString: '{402f4abf-ecde-45de-adc7-de599e9bde3d}')!
+Distribuidor guid: (GUID fromString: '{402F4ABF-ECDE-45DE-ADC7-DE599E9BDE3D}')!
 Distribuidor comment: ''!
 !Distribuidor categoriesForClass!Kernel-Objects! !
 !Distribuidor methodsFor!
@@ -32,12 +32,10 @@ valorEntrega
 
 valorEntrega: anObject
 	valorEntrega := anObject! !
-!Distribuidor categoriesForMethods!
-cargaDatos!public! !
-cargaDatos:!public! !
-id!public! !
-id:!public! !
-valorEntrega!public! !
-valorEntrega:!public! !
-!
+!Distribuidor categoriesFor: #cargaDatos!public! !
+!Distribuidor categoriesFor: #cargaDatos:!public! !
+!Distribuidor categoriesFor: #id!public! !
+!Distribuidor categoriesFor: #id:!public! !
+!Distribuidor categoriesFor: #valorEntrega!public! !
+!Distribuidor categoriesFor: #valorEntrega:!public! !
 

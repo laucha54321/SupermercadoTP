@@ -16,11 +16,6 @@ super cargaDatos.
 id:= Distribuidor  generarId.	"Genero un id unico de Distribuidor y se lo asigno a la instancia."
 valorEntrega:=Prompter prompt: 'Ingrese Valor de Entrega: '.!
 
-cargaDatos: cod
-	id := cod.
-	super cargaDatos.
-	valorEntrega := (Prompter prompt: 'Ingrese valor de la entrega: ') asFloat asInteger!
-
 id
 	^id!
 
@@ -33,9 +28,19 @@ valorEntrega
 valorEntrega: anObject
 	valorEntrega := anObject! !
 !Distribuidor categoriesFor: #cargaDatos!public! !
-!Distribuidor categoriesFor: #cargaDatos:!public! !
 !Distribuidor categoriesFor: #id!public! !
 !Distribuidor categoriesFor: #id:!public! !
 !Distribuidor categoriesFor: #valorEntrega!public! !
 !Distribuidor categoriesFor: #valorEntrega:!public! !
+
+!Distribuidor class methodsFor!
+
+generarId
+	Contador:=Contador+1.
+	^ Contador.!
+
+inicio
+Contador:=0.! !
+!Distribuidor class categoriesFor: #generarId!public! !
+!Distribuidor class categoriesFor: #inicio!public! !
 

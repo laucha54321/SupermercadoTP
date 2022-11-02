@@ -53,13 +53,13 @@ buscaDistri: cod
 cargaArticulos
 	"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
 	| art op |
-	op := 1.
-	[op = 0] whileFalse: 
+	op := true .
+	[op = true] whileTrue:
 			[art := MessageBox confirm: 'Es un articulo frio?'.
 			art ifFalse: [art := AAArticulo new] ifTrue: [art := ArtFrio new].
 			art cargaDatos.
 			colArticulos add: art.
-			op := (Prompter prompt: '1_Cargar otro articulo 0_Salir') asNumber
+			op:= MessageBox confirm: 'Desea agregar otro distribuidor?' .
 	
 ].
 !
@@ -79,16 +79,14 @@ cargaCliente
 			aux := self menu]!
 
 cargaDistribuidor
-|aux|
-"Inicio la coleccion solo si no esta inciada. Si esta iniciada este ifNil NO HACE NADA."
-
-aux :=Distribuidor new.
-aux cargaDatos.
-colDistribuidores add: aux.
-
-MessageBox notify: 'Distribuidor Agregado.'
-
-!
+	| aux op |
+	op := true .
+	[op] whileTrue: 
+			[aux := Distribuidor new.
+			aux cargaDatos.
+			colDistribuidores add: aux.
+			MessageBox notify: ('Distribuidor Agregado su id es: ', aux id printString ) .
+			op:= MessageBox confirm: 'Desea agregar otro distribuidor?' ]!
 
 cargarDatosPrueba
 |aux|
@@ -183,7 +181,7 @@ colClientes add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Pedro Perez'.
 aux zona:'Uriquiza'.
-aux id: 1.
+aux id: Distribuidor generarId .
 aux valorEntrega: 12.
 colDistribuidores add: aux.
 
@@ -191,7 +189,7 @@ colDistribuidores add: aux.
 aux:=Distribuidor new.
 aux nombre: 'Marta Tarta'.
 aux zona:'Centro 1'.
-aux id: 2.
+aux id: Distribuidor generarId .
 aux valorEntrega: 15.
 colDistribuidores add: aux.
 "
@@ -205,6 +203,7 @@ Ventas_____________________________________________________________
 inicia
 
 AAArticulo inicio.
+Distribuidor inicio.
 ArtFrio porcentajeAsignar.
 
 colArticulos := OrderedCollection new.
@@ -223,12 +222,13 @@ menu
 	op := 1.
 	[op = 0] whileFalse: 
 			[op := (Prompter
-						prompt: '1. Carga Articulo 2. Registrar Cliente 3.Registrar Venta 4.Listado Ventas 0.Salir')
+						prompt: '1. Carga Articulo 2. Registrar Cliente 3.Registrar Venta 4.Listado Ventas 5 Registrar Distribuidor 0.Salir')
 							asNumber asInteger.
 			op = 1 ifTrue: [self cargaArticulos].
 			op = 2 ifTrue: [self cargaCliente].
 			op = 3 ifTrue: [self registrarVenta].
 			op = 4 ifTrue: [self mostrarVentaDistri ].
+			op = 5 ifTrue: [self cargaDistribuidor ].
 			].
 			MessageBox notify: 'Hasta Luego'.!
 
@@ -258,11 +258,11 @@ mostrarColVenta
 Transcript show: '	';cr .
 Transcript show: 'VENTAS __________________________________'; cr.
 
-(colVentas isNil) ifFalse: [
+(colVentas isEmpty ) ifFalse: [
 colVentas do: [
 	:i |	i showTranscript.].
 ].
-(colVentas isNil) ifTrue: [
+(colVentas isEmpty)ifTrue: [
 Transcript show: 'No hay ventas realizadas para este día'; cr.
 ]
 !
@@ -272,7 +272,7 @@ mostrarVentaDistri
 con solo valores que le corresponden a ese distribuidor y llama al showTranscript
 para mostrar en ventas."
 
-	| aux aux2 aux3 valid idDist |
+	| aux aux2 aux3 valid idDist fecha |
 	Transcript clear.
 	self mostrarColArticulos.
 	aux2 := nil.
@@ -280,15 +280,22 @@ para mostrar en ventas."
 		ifTrue: 
 			[idDist := Prompter prompt: 'Ingrese id Distribuidor'.
 			valid := self validarNumber: idDist.
-			valid ifFalse: [self registrarVenta].
+			valid ifFalse: [self mostrarVentaDistri].
 			valid ifTrue: [aux2 := self buscaDistri: idDist asNumber]].
 	aux2 = nil
 		ifFalse: 
-			[aux3 := Date fromString: (Prompter prompt: 'ingrese fecha de 
-	venta - DD/MM/AAAA').
-			aux := colVentas
-						select: [:i | i fecha shortString = aux3 shortString & (i distribuidor id = aux2 id)].
-			aux do: [:i | i showTranscript]]!
+			[aux3 := Prompter prompt: 'ingrese fecha de 
+	venta - DD/MM/AAAA'.
+			valid := self validarFecha: aux3.
+			valid ifFalse: [self mostrarVentaDistri].
+			valid
+				ifTrue: 
+					[fecha := Date fromString: aux3.
+					aux := colVentas
+								select: [:i | i fecha shortString = fecha shortString and: [i distribuidor id = aux2 id]].
+					aux isEmpty
+						ifFalse: [aux do: [:i | i showTranscript]]
+						ifTrue: [Transcript show: 'No se encontraros venta en esta fecha']]]!
 
 registrarVenta
 	"Inicio Venta"
@@ -339,6 +346,17 @@ registrarVenta
 				ifTrue: [ colVentas add: venta]
 				ifFalse: [MessageBox notify: 'No compro nada. La venta no se va a registrar.']]!
 
+validarFecha: fecha
+	| aux |
+	
+	[aux := Date fromString: fecha.
+	aux isKindOf: Date.
+	^true] on: InvalidFormat
+			do: 
+				[:e |
+				MessageBox notify: 'La fecha es invalida'.
+				^false]!
+
 validarNumber: codigo
 [	
 	codigo asNumber isKindOf: Integer.
@@ -360,5 +378,6 @@ validarNumber: codigo
 !AASupermercado categoriesFor: #mostrarColVenta!public! !
 !AASupermercado categoriesFor: #mostrarVentaDistri!public! !
 !AASupermercado categoriesFor: #registrarVenta!public! !
+!AASupermercado categoriesFor: #validarFecha:!public! !
 !AASupermercado categoriesFor: #validarNumber:!public! !
 

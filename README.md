@@ -1,6 +1,8 @@
 # Cosas que hay que preguntarle a las profes
 - Como lo entregamos. Quieren el .pac.
 - Si tenemos que hacer las funciones como si fuera cliente o como si lo adminstra el supermercado.
+- Pregutar si poner el diagrama apaisado.
+- Preguntar si hay que llevar el informe impreso.
 _____________________
 - Si se puede usar **isMemberOf:**
 - El tema de **clave de usuario** si significa un username.

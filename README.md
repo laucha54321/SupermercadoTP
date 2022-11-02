@@ -1,4 +1,7 @@
 # Cosas que hay que preguntarle a las profes
+- Como lo entregamos. Quieren el .pac.
+- Si tenemos que hacer las funciones como si fuera cliente o como si lo adminstra el supermercado.
+
 - Si se puede usar **isMemberOf:**
 - El tema de **clave de usuario** si significa un username.
 - Si podemos usar **isNil** para iniciar en vez de un metodo inicia.
